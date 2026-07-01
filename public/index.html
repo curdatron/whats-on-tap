@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whats On Tap — Beer board editor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">W</span><span>Whats On Tap<small>Beer board studio</small></span></a>
+    <div class="top-actions"><span id="saveStatus" class="save-status">All changes saved</span><a class="button secondary" href="display.html" target="_blank">Preview TV display ↗</a></div>
+  </header>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <button class="nav-item active" data-panel="screens"><span>▤</span> Screens</button>
+        <button class="nav-item" data-panel="inventory"><span>◇</span> Inventory</button>
+        <button class="nav-item" data-panel="appearance"><span>✦</span> Appearance</button>
+        <button class="nav-item" data-panel="publish"><span>◉</span> Publish & TV</button>
+        <button class="nav-item" data-panel="help"><span>?</span> Help guide</button>
+      </nav>
+      <div class="sidebar-note"><b>Live board</b><span>Your edits save automatically on this device.</span><i><span></span> Ready to display</i></div>
+      <div class="credit">Developed by Pint Man</div>
+    </aside>
+
+    <section class="workspace">
+      <div id="screensPanel" class="panel active">
+        <div class="page-heading"><div><p class="eyebrow">CONTENT</p><h1>Your screens</h1><p>Create the boards your TV will cycle through.</p></div><button id="addScreen" class="button primary">＋ Add screen</button></div>
+        <div class="screen-layout">
+          <div id="screenTabs" class="screen-tabs"></div>
+          <div id="screenEditor" class="editor-card"></div>
+        </div>
+      </div>
+
+      <div id="inventoryPanel" class="panel">
+        <div class="page-heading"><div><p class="eyebrow">CELLAR</p><h1>Beer inventory</h1><p>Keep reusable beer details and purchasing notes in one place.</p></div><button id="addInventoryBeer" class="button primary">＋ Add beer</button></div>
+        <div id="inventoryList" class="inventory-list"></div>
+      </div>
+
+      <div id="appearancePanel" class="panel">
+        <div class="page-heading"><div><p class="eyebrow">DESIGN</p><h1>Make it yours</h1><p>Set a look that feels at home in your venue.</p></div><a class="button secondary" href="display.html" target="_blank">Open live preview ↗</a></div>
+        <div class="settings-grid">
+          <div class="editor-card settings-card"><h2>Colours</h2><label>Background colour <span class="colour-input"><input id="background" type="color"><code id="backgroundCode"></code></span></label><label>Primary text colour <span class="colour-input"><input id="foreground" type="color"><code id="foregroundCode"></code></span></label><label>Accent colour <span class="colour-input"><input id="accent" type="color"><code id="accentCode"></code></span></label></div>
+          <div class="editor-card settings-card"><h2>Type & timing</h2><label>Font family<select id="fontFamily" class="setting-input"><option value="Fraunces">Fraunces — characterful serif</option><option value="DM Sans">DM Sans — clean sans serif</option><option value="Georgia">Georgia — classic serif</option><option value="Arial">Arial — bold and simple</option><option value="Trebuchet MS">Trebuchet — friendly sans serif</option><option value="Courier New">Courier — tap-list mono</option></select></label><label>Font size <span id="fontSizeValue" class="value-pill"></span><input id="fontSize" type="range" min="60" max="300" step="10"></label><label>Screen duration <span id="durationValue" class="value-pill"></span><input id="duration" type="range" min="10" max="120" step="10"></label><p class="hint">The brief’s one-minute cycle is the default; shorten it while testing if you like.</p></div>
+          <div class="editor-card settings-card"><h2>Display logo</h2><label class="toggle setting-toggle"><input id="showLogo" type="checkbox"><span></span> Show an icon in the top-right</label><label>Hosted icon address<input id="logoUrl" class="setting-input" type="url" placeholder="https://example.com/my-logo.png"></label><p class="hint">Leave the address empty to use the Whats On Tap “W”, or paste a direct link to your own logo.</p></div>
+          <div class="editor-card settings-card"><h2>Background image</h2><label class="upload-button">＋ Choose image<input id="backgroundImage" type="file" accept="image/*"></label><div id="backgroundImageStatus" class="upload-status">No image selected</div><button id="removeBackgroundImage" class="text-button" type="button">Remove background image</button><label>Image transparency <span id="imageOpacityValue" class="value-pill"></span><input id="imageOpacity" type="range" min="0" max="100" step="5"></label><label>Brightness <span id="imageBrightnessValue" class="value-pill"></span><input id="imageBrightness" type="range" min="25" max="175" step="5"></label><label>Contrast <span id="imageContrastValue" class="value-pill"></span><input id="imageContrast" type="range" min="25" max="175" step="5"></label></div>
+          <div class="editor-card settings-card overlay-card"><h2>Colour overlay</h2><label>Overlay colour <span class="colour-input"><input id="overlayColor" type="color"><code id="overlayColorCode"></code></span></label><label>Overlay strength <span id="overlayOpacityValue" class="value-pill"></span><input id="overlayOpacity" type="range" min="0" max="100" step="5"></label><p class="hint">Use an overlay to keep beer names readable over a bright or busy photo.</p></div>
+          <div class="preview-card"><span>TV PREVIEW</span><div id="miniPreview"></div></div>
+        </div>
+      </div>
+
+      <div id="publishPanel" class="panel">
+        <div class="page-heading"><div><p class="eyebrow">GO LIVE</p><h1>Put it on the big screen</h1><p>Share your beer board on the pub’s local network.</p></div></div>
+        <div class="publish-hero"><div><span class="signal">◉</span><p>DISPLAY STATUS</p><h2>Ready to go live</h2><p>Keep Whats On Tap running on this computer, then open the display address on your TV.</p></div><a class="button light" href="display.html" target="_blank">Launch display ↗</a></div>
+        <div class="steps">
+          <article><b>1</b><div><h3>Connect to the same network</h3><p>Make sure this computer and your smart TV are using the same Wi‑Fi or wired network.</p></div></article>
+          <article><b>2</b><div><h3>Find this computer’s address</h3><p>When the app starts, it prints a “Network” address. It looks like <code>http://192.168.1.20:4173/display.html</code>.</p></div></article>
+          <article><b>3</b><div><h3>Open it on the TV</h3><p>Enter that address in the television’s web browser. Choose full-screen mode and leave it open.</p></div></article>
+        </div>
+      </div>
+
+      <div id="helpPanel" class="panel">
+        <div class="page-heading"><div><p class="eyebrow">QUICK START</p><h1>Help guide</h1><p>From empty board to brilliant beer list in a few minutes.</p></div></div>
+        <div class="help-grid"><article><span>01</span><h2>Build your list</h2><p>Open <b>Screens</b>, name each screen and add sections such as Cask or Keg. Add as many beers as you need.</p></article><article><span>02</span><h2>Add pump clips</h2><p>Turn on “Show pump clip” for a beer, then paste a direct image address. Whats On Tap scales it neatly without stretching.</p></article><article><span>03</span><h2>Style the board</h2><p>Use <b>Appearance</b> to choose your background, text, accent colour, type size and rotation speed.</p></article><article><span>04</span><h2>Show it on TV</h2><p>Start the app on a computer, keep it running, and open the network display address in the TV browser.</p></article></div>
+        <div class="tip"><b>Good to know</b><p>Changes are stored automatically in this browser. Refresh the TV display after editing to pick up the latest list.</p></div>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

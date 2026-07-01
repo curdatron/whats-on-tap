@@ -1,0 +1,9 @@
+{
+  "name": "whats-on-tap",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A local-network beer board for pubs and tap rooms.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
