@@ -3,9 +3,19 @@ let current = 0;
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 function render() {
   const screen = data.screens[current], a = data.appearance;
-  document.body.style.cssText = `--board-bg:${a.background};--board-text:${a.foreground};--board-accent:${a.accent};--board-scale:${a.fontSize/100};--board-font:${JSON.stringify(a.fontFamily || 'Fraunces')};--board-image:${a.backgroundImage ? `url("${a.backgroundImage}")` : 'none'};--image-opacity:${(a.imageOpacity ?? 35)/100};--image-brightness:${a.imageBrightness ?? 80}%;--image-contrast:${a.imageContrast ?? 110}%;--overlay:${a.overlayColor || a.background};--overlay-opacity:${(a.overlayOpacity ?? 35)/100}`;
-  const logo = a.showLogo === false ? '' : (a.logoUrl ? `<div class="display-brand custom"><img src="${esc(a.logoUrl)}" alt="Venue logo" onerror="this.parentNode.style.display='none'"></div>` : '<div class="display-brand">W</div>');
-  document.getElementById('display').innerHTML = `<header><div><p>WHATS ON TAP</p><h1>${esc(screen.title)}</h1></div>${logo}</header><div class="display-sections">${screen.sections.map(section => `<section><h2>${esc(section.title)}</h2><div>${section.beers.map(beer => `<article>${beer.showImage && beer.image ? `<div class="pumpclip"><img src="${esc(beer.image)}" alt="" onerror="this.parentNode.style.display='none'"></div>` : ''}<div class="beer-copy"><h3>${esc(beer.name || 'Untitled beer')}</h3><p>${esc(beer.brewery)}${beer.style ? `<span> · ${esc(beer.style)}</span>` : ''}</p></div><div class="beer-numbers"><b>${esc(beer.abv)}</b>${beer.price ? `<strong>£${esc(beer.price)}</strong>` : ''}</div></article>`).join('') || '<p class="empty-list">More beers coming soon</p>'}</div></section>`).join('')}</div><footer>ASK THE TEAM FOR TODAY’S RECOMMENDATIONS <span>${current+1} / ${data.screens.length}</span></footer>`;
+  const backgroundImage=a.backgroundImage||a.backgroundImageUrl;
+  document.body.style.cssText = `--board-bg:${a.background};--board-text:${a.foreground};--board-accent:${a.accent};--board-scale:${a.fontSize/100};--board-font:${JSON.stringify(a.fontFamily || 'Fraunces')};--board-image:${backgroundImage ? `url("${backgroundImage}")` : 'none'};--image-opacity:${(a.imageOpacity ?? 35)/100};--image-brightness:${a.imageBrightness ?? 80}%;--image-contrast:${a.imageContrast ?? 110}%;--overlay:${a.overlayColor || a.background};--overlay-opacity:${(a.overlayOpacity ?? 35)/100}`;
+  const display=document.getElementById('display');
+  if(screen.type==='image') {
+    display.className='display image-slide';
+    display.innerHTML=screen.image ? `<img src="${esc(screen.image)}" alt="${esc(screen.title||'Promotional slide')}" onerror="this.style.display='none'">` : '<div class="missing-promotion">Promotional image unavailable</div>';
+  } else {
+    display.className='display';
+    const logoImage=a.logoImage||a.logoUrl;
+    const logo = a.showLogo === false ? '' : (logoImage ? `<div class="display-brand custom"><img src="${esc(logoImage)}" alt="Venue logo" onerror="this.parentNode.style.display='none'"></div>` : '<div class="display-brand">W</div>');
+    const kicker=a.kickerText ?? 'Whats on tap', footer=a.footerText ?? 'Ask the team for today’s recommendations';
+    display.innerHTML = `<header><div>${kicker ? `<p>${esc(kicker)}</p>` : ''}<h1>${esc(screen.title)}</h1></div>${logo}</header><div class="display-sections">${screen.sections.map(section => `<section><h2>${esc(section.title)}</h2><div>${section.beers.map(beer => `<article>${beer.showImage && beer.image ? `<div class="pumpclip"><img src="${esc(beer.image)}" alt="" onerror="this.parentNode.style.display='none'"></div>` : ''}<div class="beer-copy"><h3>${esc(beer.name || 'Untitled beer')}</h3><p>${esc(beer.brewery)}${beer.style ? `<span> · ${esc(beer.style)}</span>` : ''}</p></div><div class="beer-numbers"><b>${esc(beer.abv)}</b>${beer.price ? `<strong>£${esc(beer.price)}</strong>` : ''}</div></article>`).join('') || '<p class="empty-list">More beers coming soon</p>'}</div></section>`).join('')}</div><footer>${footer ? `<span>${esc(footer)}</span>` : '<span></span>'}<span>${current+1} / ${data.screens.length}</span></footer>`;
+  }
   const progress = document.getElementById('progress'); progress.style.animation = 'none'; progress.offsetHeight; progress.style.animation = `progress ${a.duration || 60}s linear`;
 }
 async function start() {

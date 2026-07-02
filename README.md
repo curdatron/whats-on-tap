@@ -10,9 +10,11 @@ Developed by **Pint Man**.
 
 ### Build the board
 
-- Create multiple screens and rotate between them automatically
+- Create, reorder and automatically rotate between multiple screens
 - Organise each screen into reorderable sections such as Cask, Keg, Bottles or Cans
+- Drag beers into the preferred order within each section
 - Add beer name, brewery, style, ABV, price and an optional pump-clip image
+- Add full-screen promotional image slides from an upload or hosted image address
 - Delete screens, sections and individual listings
 - Change the screen duration from 10 seconds to two minutes
 
@@ -29,11 +31,12 @@ Developed by **Pint Man**.
 ### Match the venue
 
 - Choose background, text, accent and overlay colours
-- Upload a custom background image
+- Upload a custom background image or use a hosted image address
 - Adjust background-image transparency, brightness and contrast
 - Select from several display fonts
 - Scale display text from 60% to 300%
-- Hide the default corner icon or replace it with a hosted venue logo
+- Hide the default corner icon or replace it with an uploaded or hosted venue logo
+- Customise or hide the top label and footer message
 
 ### Display locally
 

@@ -9,6 +9,11 @@ const dataFile = path.join(__dirname, 'data.json');
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.json': 'application/json' };
 
 const server = http.createServer((req, res) => {
+  if (req.url === '/api/network' && req.method === 'GET') {
+    const addresses = Object.values(os.networkInterfaces()).flat().filter(x => x && x.family === 'IPv4' && !x.internal).map(x => `http://${x.address}:${port}/display.html`);
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+    return res.end(JSON.stringify(addresses));
+  }
   if (req.url === '/api/board' && req.method === 'GET') {
     return fs.readFile(dataFile, (error, data) => {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
