@@ -4,8 +4,6 @@
 
 Whats On Tap lets venue teams maintain their drinks list from a straightforward browser-based editor and show it on any television with a web browser. It runs on a computer inside the venue and publishes the display across the local network—no account, cloud service or subscription required.
 
-Developed by **Pint Man**.
-
 ## Features
 
 ### Build the board
